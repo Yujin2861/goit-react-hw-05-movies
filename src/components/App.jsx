@@ -1,18 +1,27 @@
 import { Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { Suspense, lazy } from 'react';
+ 
 import Layout from './Layout/Layout';
-import Home from 'pages/Home';
-import Movies from 'pages/Movies';
-import MoviesDetails from 'pages/MoviesDetails/MoviesDetails';
-import Cast from './Cast/Cast';
-import Reviews from './Reviews/Reviews';
+//import Home from 'pages/Home';
+//import Movies from 'pages/Movies';
+//import MoviesDetails from 'pages/MoviesDetails/MoviesDetails';
+//import Cast from './Cast/Cast';
+//import Reviews from './Reviews/Reviews';
+
+const Home = lazy(() => import('pages/Home'))
+const Movies = lazy(() => import('pages/Movies'))
+const MoviesDetails = lazy(() => import('pages/MoviesDetails/MoviesDetails'))
+const Cast = lazy(() => import('./Cast/Cast'))
+const Reviews = lazy(() => import('./Reviews/Reviews'))
+
 
 
 export const App = () => {
   return (
     <>
+      <Suspense> fallback={<div>LOADING PAGE...</div>} 
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
@@ -25,6 +34,7 @@ export const App = () => {
         <Route path="*" element={<Home />} />
       </Routes>
       <ToastContainer />
+      </Suspense>
     </>
   );
 };
